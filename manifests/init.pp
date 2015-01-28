@@ -5,6 +5,10 @@ define windows_fluentd (
 ){
   case $ensure {
     'enabled', 'present': {
+      exec { 'cmd /c net stop nxlog':
+        path => $::path,
+        logoutput => false
+      }->
       download_file { "Download NXLog" :
         url                   => 'http://nxlog.org/system/files/products/files/1/nxlog-ce-2.8.1248.msi',
         destination_directory => 'c:\temp',
@@ -20,6 +24,10 @@ define windows_fluentd (
         ensure             => file,
         source_permissions => ignore,
         content             => template('windows_fluentd/nxlog.conf.erb')
+      }->
+      exec { 'cmd /c net start nxlog':
+        path => $::path,
+        logoutput => false
       }
     }
     default: {
