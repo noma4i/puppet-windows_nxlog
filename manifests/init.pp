@@ -1,0 +1,3 @@
+define windows_fluentd(){
+
+}
