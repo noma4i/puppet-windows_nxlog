@@ -5,7 +5,7 @@ define windows_fluentd (
 ){
   case $ensure {
     'enabled', 'present': {
-      exec { 'cmd /c net stop nxlog':
+      exec { 'cmd /c net stop nxlog || exit /b 0':
         path => $::path,
         logoutput => false
       }->
@@ -25,7 +25,7 @@ define windows_fluentd (
         source_permissions => ignore,
         content             => template('windows_fluentd/nxlog.conf.erb')
       }->
-      exec { 'cmd /c net start nxlog':
+      exec { 'cmd /c net start nxlog  || exit /b 0':
         path => $::path,
         logoutput => false
       }
