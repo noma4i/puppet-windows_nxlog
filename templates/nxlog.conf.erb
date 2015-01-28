@@ -1,0 +1,47 @@
+define ROOT C:\Program Files (x86)\nxlog
+
+Moduledir %ROOT%\modules
+CacheDir %ROOT%\data
+Pidfile %ROOT%\data\nxlog.pid
+SpoolDir %ROOT%\data
+LogFile %ROOT%\data\nxlog.log
+
+<Input in>
+    Module      im_msvistalog
+    ReadFromLast    True
+    # http://msdn.microsoft.com/en-us/library/aa385231.aspx
+    # http://msdn.microsoft.com/en-us/library/ff604025(v=office.14).aspx
+    # Level 1 (ID=30  Critical)     severity level events
+    # Level 2 (ID=40  Error)        severity level events
+    # Level 3 (ID=50  Warning)      severity level events
+    # Level 4 (ID=80  Information)  severity level events
+    # Level 5 (ID=100 Verbose)      severity level events
+    # All channels are included by default which are listed in the registry under these:
+    # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels
+    # HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\eventlog\System
+    #
+    # <Select Path='Key Management Service'>*</Select></Query>\
+    # <Select Path='Internet Explorer'>*</Select></Query>\
+    # <Select Path='HardwareEvents'>*</Select></Query>\
+    #
+    Query   <QueryList>\
+          <Query Id="0">\
+              <Select Path="Security">*</Select>\
+              <Select Path="System">*[System/Level=4]</Select>\
+              <Select Path="Application">*[Application/Level=2]</Select>\
+              <Select Path="Setup">*[System/Level=3]</Select>\
+              <Select Path='Windows PowerShell'>*</Select>\
+          </Query>\
+      </QueryList>
+</Input>
+
+<Output out>
+    Module      om_tcp
+    Host        <%= @host %>
+    Port        <%= @port %>
+</Output>
+
+<Route 1>
+    Path        in => out
+</Route>
+
