@@ -1,3 +1,29 @@
-define windows_fluentd(){
-
+define windows_fluentd (
+  $ensure   = 'enabled',
+  $host = "127.0.0.1",
+  $port = "514"
+){
+  case $ensure {
+    'enabled', 'present': {
+      download_file { "Download NXLog" :
+        url                   => 'http://nxlog.org/system/files/products/files/1/nxlog-ce-2.8.1248.msi',
+        destination_directory => 'c:\temp',
+        destination_file      => 'nxlog.msi'
+      }->
+      exec { "Install ${kb}":
+        command  => template('windows_fluentd/install_nxlog.ps1.erb'),
+        creates  => 'C:\\Program Files (x86)\\nxlog\\nxlog.exe',
+        provider => 'powershell',
+        timeout  => 1800
+      }->
+      file { 'C:\\Program Files (x86)\\nxlog\\conf\\nxlog.conf':
+        ensure             => file,
+        source_permissions => ignore,
+        content             => template('windows_fluentd/nxlog.conf.erb')
+      }
+    }
+    default: {
+      fail('Invalid ensure option!\n')
+    }
+  }
 }
