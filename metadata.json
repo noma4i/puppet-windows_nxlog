@@ -1,12 +1,12 @@
 {
-  "name": "noma4i-windows_fluentd",
+  "name": "noma4i-windows_nxlog",
   "version": "0.0.1",
   "author": "noma4i",
-  "summary": "Install and setup Fluentd client(nxlog) to Windows machine",
+  "summary": "Install and setup Fluentd/Logstash client(nxlog) to Windows machine",
   "license": "Apache-2.0",
-  "source": "https://github.com/noma4i/puppet-windows_fluentd",
-  "project_page": "https://github.com/noma4i/puppet-windows_fluentd",
-  "issues_url": "https://github.com/noma4i/puppet-windows_fluentd/issues",
+  "source": "https://github.com/noma4i/puppet-windows_nxlog",
+  "project_page": "https://github.com/noma4i/puppet-windows_nxlog",
+  "issues_url": "https://github.com/noma4i/puppet-windows_nxlog/issues",
   "requirements": [
     {
       "name": "pe",
@@ -31,6 +31,6 @@
     }
   ],
   "dependencies": [
-    {"name":"opentable-download_file","version_requirement":">=1.1.0 <5.0.0"}
+    {"name":"opentable-download_file","version_requirement":">= 1.1.0 < 5.0.0"}
   ]
 }
