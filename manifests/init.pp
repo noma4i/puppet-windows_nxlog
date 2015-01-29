@@ -1,4 +1,4 @@
-define windows_fluentd (
+define windows_nxlog (
   $ensure   = 'enabled',
   $host = "127.0.0.1",
   $port = "514"

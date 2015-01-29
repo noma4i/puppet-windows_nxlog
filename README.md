@@ -1,4 +1,4 @@
-# windows_fluentd
+# windows_nxlog
 
 Puppet module to install and setup Fluentd client(nxlog) to Windows machine.
 
