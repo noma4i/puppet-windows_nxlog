@@ -15,7 +15,7 @@ define windows_nxlog (
         destination_file      => 'nxlog.msi'
       }->
       exec { "Install ${kb}":
-        command  => template('windows_fluentd/install_nxlog.ps1.erb'),
+        command  => template('windows_nxlog/install_nxlog.ps1.erb'),
         creates  => 'C:\\Program Files (x86)\\nxlog\\nxlog.exe',
         provider => 'powershell',
         timeout  => 1800
@@ -23,7 +23,7 @@ define windows_nxlog (
       file { 'C:\\Program Files (x86)\\nxlog\\conf\\nxlog.conf':
         ensure             => file,
         source_permissions => ignore,
-        content             => template('windows_fluentd/nxlog.conf.erb')
+        content             => template('windows_nxlog/nxlog.conf.erb')
       }->
       exec { 'cmd /c net start nxlog  || exit /b 0':
         path => $::path,
