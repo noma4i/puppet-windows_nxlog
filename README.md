@@ -15,3 +15,13 @@ Puppet module to install and setup Fluentd client(nxlog) to Windows machine.
 This is a basic setup which will download, install and configure NXLog for sending logs to Fluentd.
 
 If you want to changes that, you are free to edit `templates\nxlog.conf.erb`
+
+#### NXLog config explained 
+
+##### Section `events`
+    Events are consumed using `im_msvistalog` module which is working only in win7 and later.
+    Pointer starts to read Windows Event log from last record.
+
+##### Section `transform_events`
+    All input events are transformed to `syslog` type.
+
